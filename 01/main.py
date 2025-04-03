@@ -46,18 +46,17 @@ class SplitFn:
     def __init__(self, col: int, val: str | int):
         self.col = col
         self.val = val
+        if col == 0 and isinstance(val, str):
+            self.fn: Callable[[tuple[str, int, str]], bool] = lambda row: row[col] == val
+        elif col == 1 and isinstance(val, int):
+            self.fn: Callable[[tuple[str, int, str]], bool] = lambda row: row[col] >= val
+
     def __repr__(self):
         if self.col == 0 and isinstance(self.val, str):
             return f"col {self.col} == {self.val}"
         elif self.col == 1 and isinstance(self.val, int):
             return f"col {self.col} >= {self.val}"
         return ""
-
-def get_split_fn(col: int, val: str | int) -> Callable[[tuple[str, int, str]], bool] | None:
-    if col == 0 and isinstance(val, str):
-        return lambda row: row[col] == val
-    elif col == 1 and isinstance(val, int):
-        return lambda row: row[col] >= val
 
 def find_best_split(train_data: list[tuple[str, int, str]]):
     n_features = len(train_data[0]) - 1  # number of columns
@@ -68,6 +67,7 @@ def find_best_split(train_data: list[tuple[str, int, str]]):
             # print(split_fn)
             split_fn = SplitFn(col, val)
             print(split_fn)
+            print(split_fn.fn)
 
 train_data: list[tuple[str, int, str]] = [
     ('Green', 3, 'Apple'),
