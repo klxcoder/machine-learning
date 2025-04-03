@@ -58,16 +58,15 @@ class SplitFn:
             return f"col {self.col} >= {self.val}"
         return ""
 
-def find_best_split(train_data: list[tuple[str, int, str]]):
+def find_best_split(train_data: list[tuple[str, int, str]], gini_impurity: float):
     n_features = len(train_data[0]) - 1  # number of columns
     for col in range(n_features):  # for each feature
         values = set([row[col] for row in train_data])  # unique values in the column
         for val in values:
-            # split_fn: Callable[[tuple[str, int, str]], bool] | None = get_split_fn(col, val)
-            # print(split_fn)
             split_fn = SplitFn(col, val)
-            print(split_fn)
-            print(split_fn.fn)
+            print('split_fn: ', split_fn)
+            gain: float = get_information_gain(train_data, split_fn.fn, gini_impurity)
+            print(gain)
 
 train_data: list[tuple[str, int, str]] = [
     ('Green', 3, 'Apple'),
@@ -78,13 +77,8 @@ train_data: list[tuple[str, int, str]] = [
 ]
 
 def main():
-    # gini_impurity = get_gini_impurity(get_labels(train_data))
-    find_best_split(train_data)
-
-    # print(get_information_gain(train_data, lambda row: row[0] == "Green", gini_impurity)) # 0.1399999999999999
-    # print(get_information_gain(train_data, lambda row: row[0] == "Yellow", gini_impurity)) # 0.17333333333333323
-    # print(get_information_gain(train_data, lambda row: row[0] == "Red", gini_impurity)) # 0.37333333333333324
-    # print(get_information_gain(train_data, lambda row: row[1] < 2, gini_impurity)) # 0.37333333333333324
+    gini_impurity = get_gini_impurity(get_labels(train_data))
+    find_best_split(train_data, gini_impurity)
 
 if __name__ == "__main__":
     main()
