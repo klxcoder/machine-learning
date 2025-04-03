@@ -14,3 +14,20 @@
   - Classification and Regression Tree
   - Gini Impurity
   - Information Gain
+
+# Calculate Gini Impurity
+  - First, let's count each label in your dataset:
+    + Apple: 2
+    + Grape: 2
+    + Lemon: 1
+
+  - Total samples = 5.
+  - Next, calculate the probability for each label:
+    + $p(Apple)=\frac{2}{5}​=0.4$
+    + $p(Grape)=\frac{2}{5}=0.4$
+    + $p(Lemon)=\frac{1}{5}=0.2$
+
+  - The Gini impurity formula is: $G = 1 - \sum(p_i)^2$
+  - Plug in the probabilities:
+    + $G = 1 - (0.4^2 + 0.4^2 + 0.2^2) = 0.64$
+  - So, the `Gini impurity` of your dataset is `0.64`.
