@@ -59,15 +59,20 @@ class SplitFn:
         return ""
 
 def find_best_split(train_data: list[tuple[str, int, str]]):
-    gini_impurity = get_gini_impurity(get_labels(train_data)) 
+    gini_impurity = get_gini_impurity(get_labels(train_data))
+
+    best_gain: float = 0  # keep track of the best information gain
+    best_split_fn: SplitFn | None = None  # keep train of the feature / value that produced it
+
     n_features = len(train_data[0]) - 1  # number of columns
     for col in range(n_features):  # for each feature
         values = set([row[col] for row in train_data])  # unique values in the column
         for val in values:
             split_fn = SplitFn(col, val)
-            print('split_fn: ', split_fn)
             gain: float = get_information_gain(train_data, split_fn.fn, gini_impurity)
-            print(gain)
+            if gain >= best_gain:
+                best_gain, best_split_fn = gain, split_fn
+    return best_gain, best_split_fn
 
 train_data: list[tuple[str, int, str]] = [
     ('Green', 3, 'Apple'),
@@ -78,7 +83,9 @@ train_data: list[tuple[str, int, str]] = [
 ]
 
 def main():
-    find_best_split(train_data)
+    best_gain, best_question = find_best_split(train_data)
+    print(best_gain) # 0.37333333333333324
+    print(best_question) # col 1 >= 3
 
 if __name__ == "__main__":
     main()
