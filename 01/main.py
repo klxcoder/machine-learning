@@ -58,7 +58,8 @@ class SplitFn:
             return f"col {self.col} >= {self.val}"
         return ""
 
-def find_best_split(train_data: list[tuple[str, int, str]], gini_impurity: float):
+def find_best_split(train_data: list[tuple[str, int, str]]):
+    gini_impurity = get_gini_impurity(get_labels(train_data)) 
     n_features = len(train_data[0]) - 1  # number of columns
     for col in range(n_features):  # for each feature
         values = set([row[col] for row in train_data])  # unique values in the column
@@ -77,8 +78,7 @@ train_data: list[tuple[str, int, str]] = [
 ]
 
 def main():
-    gini_impurity = get_gini_impurity(get_labels(train_data))
-    find_best_split(train_data, gini_impurity)
+    find_best_split(train_data)
 
 if __name__ == "__main__":
     main()
