@@ -42,6 +42,17 @@ def get_information_gain(
     weighted_gini_impurity = get_weighted_gini_impurity(left, right)
     return gini_impurity - weighted_gini_impurity
 
+class SplitFn:
+    def __init__(self, col: int, val: str | int):
+        self.col = col
+        self.val = val
+    def __repr__(self):
+        if self.col == 0 and isinstance(self.val, str):
+            return f"col {self.col} == {self.val}"
+        elif self.col == 1 and isinstance(self.val, int):
+            return f"col {self.col} >= {self.val}"
+        return ""
+
 def get_split_fn(col: int, val: str | int) -> Callable[[tuple[str, int, str]], bool] | None:
     if col == 0 and isinstance(val, str):
         return lambda row: row[col] == val
@@ -53,7 +64,9 @@ def find_best_split(train_data: list[tuple[str, int, str]]):
     for col in range(n_features):  # for each feature
         values = set([row[col] for row in train_data])  # unique values in the column
         for val in values:
-            split_fn: Callable[[tuple[str, int, str]], bool] | None = get_split_fn(col, val)
+            # split_fn: Callable[[tuple[str, int, str]], bool] | None = get_split_fn(col, val)
+            # print(split_fn)
+            split_fn = SplitFn(col, val)
             print(split_fn)
 
 train_data: list[tuple[str, int, str]] = [
