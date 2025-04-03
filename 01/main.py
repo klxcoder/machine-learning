@@ -51,8 +51,10 @@ def main():
         ('Yellow', 3, 'Lemon'),
     ]
     gini_impurity = get_gini_impurity(get_labels(train_data))
-    information_gain = get_information_gain(train_data, lambda row: row[0] == "Green", gini_impurity)
-    print(information_gain) # 0.1399999999999999
+    print(get_information_gain(train_data, lambda row: row[0] == "Green", gini_impurity)) # 0.1399999999999999
+    print(get_information_gain(train_data, lambda row: row[0] == "Yellow", gini_impurity)) # 0.17333333333333323
+    print(get_information_gain(train_data, lambda row: row[0] == "Red", gini_impurity)) # 0.37333333333333324
+    print(get_information_gain(train_data, lambda row: row[1] < 2, gini_impurity)) # 0.37333333333333324
 
 if __name__ == "__main__":
     main()
