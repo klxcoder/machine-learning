@@ -15,11 +15,11 @@ def get_gini_impurity(labels: list[str]) -> float:
         impurity -= prob ** 2
     return impurity
 
-def get_left_right(train_data: list[tuple[str, int, str]], split: Callable[[tuple[str, int, str]], bool]):
+def get_left_right(train_data: list[tuple[str, int, str]], split_fn: Callable[[tuple[str, int, str]], bool]):
     left: list[tuple[str, int, str]] = []
     right: list[tuple[str, int, str]] = []
     for row in train_data:
-        if split(row):
+        if split_fn(row):
             left.append(row)
         else:
             right.append(row)
@@ -35,12 +35,19 @@ def get_weighted_gini_impurity(left: list[tuple[str, int, str]], right: list[tup
 
 def get_information_gain(
         train_data: list[tuple[str, int, str]],
-        split: Callable[[tuple[str, int, str]], bool],
+        split_fn: Callable[[tuple[str, int, str]], bool],
         gini_impurity: float,
     ):
-    left, right = get_left_right(train_data, split)
+    left, right = get_left_right(train_data, split_fn)
     weighted_gini_impurity = get_weighted_gini_impurity(left, right)
     return gini_impurity - weighted_gini_impurity
+
+def find_best_split(train_data: list[tuple[str, int, str]]):
+    n_features = len(train_data[0]) - 1  # number of columns
+    for col in range(n_features):  # for each feature
+        values = set([row[col] for row in train_data])  # unique values in the column
+        for val in values:
+            print(col, val)
 
 train_data: list[tuple[str, int, str]] = [
     ('Green', 3, 'Apple'),
@@ -51,11 +58,13 @@ train_data: list[tuple[str, int, str]] = [
 ]
 
 def main():
-    gini_impurity = get_gini_impurity(get_labels(train_data))
-    print(get_information_gain(train_data, lambda row: row[0] == "Green", gini_impurity)) # 0.1399999999999999
-    print(get_information_gain(train_data, lambda row: row[0] == "Yellow", gini_impurity)) # 0.17333333333333323
-    print(get_information_gain(train_data, lambda row: row[0] == "Red", gini_impurity)) # 0.37333333333333324
-    print(get_information_gain(train_data, lambda row: row[1] < 2, gini_impurity)) # 0.37333333333333324
+    # gini_impurity = get_gini_impurity(get_labels(train_data))
+    find_best_split(train_data)
+
+    # print(get_information_gain(train_data, lambda row: row[0] == "Green", gini_impurity)) # 0.1399999999999999
+    # print(get_information_gain(train_data, lambda row: row[0] == "Yellow", gini_impurity)) # 0.17333333333333323
+    # print(get_information_gain(train_data, lambda row: row[0] == "Red", gini_impurity)) # 0.37333333333333324
+    # print(get_information_gain(train_data, lambda row: row[1] < 2, gini_impurity)) # 0.37333333333333324
 
 if __name__ == "__main__":
     main()
