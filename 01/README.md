@@ -31,3 +31,42 @@
   - Plug in the probabilities:
     + $G = 1 - (0.4^2 + 0.4^2 + 0.2^2) = 0.64$
   - So, the `Gini impurity` of your dataset is `0.64`.
+
+# Possible splits
+  - Is Color equal to Green?
+  - Is Color equal to Yellow?
+  - Is Color equal to Red?
+  - Is Diameter < 2.0?
+
+# Steps
+  - Iterate through all possible splits
+  - Choose the split that maximize `information gain`
+
+# Evaluate if "Is Color equal to Green?" is a good split
+
+## Step 1: Split the Data
+  - Left Group (Color = Green):
+    + ('Green', 3, 'Apple')
+  - Right Group (Color ≠ Green):
+    + ('Yellow', 3, 'Apple')
+    + ('Red', 1, 'Grape')
+    + ('Red', 1, 'Grape')
+    + ('Yellow', 3, 'Lemon')
+
+## Step 2: Calculate Gini Impurity for Each Group
+  - Left Group (1 item, all Apple)
+    + Labels: ['Apple']
+    + Gini Impurity = 0.0 (Pure group)
+  - Right Group (4 items: 1 Apple, 2 Grapes, 1 Lemon)
+    + Probabilities:
+      * Apple: 1/4 = 0.25
+      * Grape: 2/4 = 0.5
+      * Lemon: 1/4 = 0.25
+    + Gini Impurity:
+      * $1-(0.25^2 + 0.5^2 + 0.25^2) = 0.625$
+
+## Step 3: Calculate Weighted Gini Impurity
+  - Weighted Gini = $(\frac{1}{5} * 0.0) + (\frac{4}{5} * 0.625) = 0.5$
+
+## Step 4: Compute Information Gain
+  - Information Gain = $Orignial Gini - Weighted Gini = 0.64 - 0.5 = 0.14$
