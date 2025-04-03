@@ -71,3 +71,42 @@
 
 ## Step 4: Compute Information Gain
   - Information Gain = $Orignial Gini - Weighted Gini = 0.64 - 0.5 = 0.14$
+
+# Desired steps to build tree
+
+```txt
+---------
+rows = [['Green', 3, 'Apple'], ['Yellow', 3, 'Apple'], ['Red', 1, 'Grape'], ['Red', 1, 'Grape'], ['Yellow', 3, 'Lemon']]
+best_gain = 0.37333333333333324
+best_question = Is diameter >= 3?
+---------
+rows = [['Green', 3, 'Apple'], ['Yellow', 3, 'Apple'], ['Yellow', 3, 'Lemon']]
+best_gain = 0.11111111111111116
+best_question = Is color == Yellow?
+---------
+rows = [['Yellow', 3, 'Apple'], ['Yellow', 3, 'Lemon']]
+best_gain = 0
+best_question = None
+---------
+rows = [['Green', 3, 'Apple']]
+best_gain = 0
+best_question = None
+---------
+rows = [['Red', 1, 'Grape'], ['Red', 1, 'Grape']]
+best_gain = 0
+best_question = None
+```
+
+# print tree
+
+```txt
+Is diameter >= 3?
+--> True:
+  Is color == Yellow?
+  --> True:
+    Predict {'Apple': 1, 'Lemon': 1}
+  --> False:
+    Predict {'Apple': 1}
+--> False:
+  Predict {'Grape': 2}
+```
