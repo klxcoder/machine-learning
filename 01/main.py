@@ -33,6 +33,15 @@ def get_weighted_gini_impurity(left: list[tuple[str, int, str]], right: list[tup
     weighted_right = len_right / len_total * get_gini_impurity(get_labels(right))
     return weighted_left + weighted_right
 
+def get_information_gain(
+        train_data: list[tuple[str, int, str]],
+        split: Callable[[tuple[str, int, str]], bool],
+        gini_impurity: float,
+    ):
+    left, right = get_left_right(train_data, split)
+    weighted_gini_impurity = get_weighted_gini_impurity(left, right)
+    return gini_impurity - weighted_gini_impurity
+
 def main():
     train_data: list[tuple[str, int, str]] = [
         ('Green', 3, 'Apple'),
@@ -42,10 +51,8 @@ def main():
         ('Yellow', 3, 'Lemon'),
     ]
     gini_impurity = get_gini_impurity(get_labels(train_data))
-    print(gini_impurity) # 0.6399999999999999
-    left, right = get_left_right(train_data, lambda row: row[0] == "Green")
-    weighted_gini_impurity = get_weighted_gini_impurity(left, right)
-    print(weighted_gini_impurity) # 0.5
+    information_gain = get_information_gain(train_data, lambda row: row[0] == "Green", gini_impurity)
+    print(information_gain) # 0.1399999999999999
 
 if __name__ == "__main__":
     main()
