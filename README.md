@@ -13,6 +13,10 @@
     + Linear regression
     + Logistic regression
     + Decision trees
+      * ID3
+      * C4.5
+      * C5.0
+      * CART (Classification and Regression Tree)
     + Random forest
     + Support vector machine (SVM)
     + Neural networks
