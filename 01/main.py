@@ -1,5 +1,9 @@
 from typing import Callable
 
+def get_labels(train_data: list[tuple[str, int, str]]):
+    lables: list[str] = list(map(lambda x: x[2], train_data))
+    return lables
+
 def get_gini_impurity(labels: list[str]) -> float:
     total: int = len(labels)
     counts = {}
@@ -29,8 +33,7 @@ def main():
         ('Red', 1, 'Grape'),
         ('Yellow', 3, 'Lemon'),
     ]
-    lables: list[str] = list(map(lambda x: x[2], train_data))
-    gini_impurity = get_gini_impurity(lables)
+    gini_impurity = get_gini_impurity(get_labels(train_data))
     print(gini_impurity) # 0.6399999999999999
     left, right = get_left_right(train_data, lambda row: row[0] == "Green")
     print(left) # [('Green', 3, 'Apple')]
