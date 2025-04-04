@@ -102,16 +102,14 @@ def build_tree(train_data: list[tuple[str, int, str]]) -> Node[list[tuple[str, i
     print(best_gain)
     print(best_question)
     node: Node[list[tuple[str, int, str]]] = Node(train_data)
+    if best_gain == 0 or not best_question:
+        return node
+    left, right = get_left_right(train_data, best_question.fn)
+    build_tree(left)
+    build_tree(right)
     return node
 
 def main():
-    best_gain, best_question = find_best_split(train_data)
-    print(best_gain) # 0.37333333333333324
-    print(best_question) # Is diameter >= 3?
-    if not best_question: return
-    left, right = get_left_right(train_data, best_question.fn)
-    print(left) # [('Green', 3, 'Apple'), ('Yellow', 3, 'Apple'), ('Yellow', 3, 'Lemon')]
-    print(right) # [('Red', 1, 'Grape'), ('Red', 1, 'Grape')]
     build_tree(train_data)
 
 if __name__ == "__main__":
