@@ -134,21 +134,24 @@ def classify(data: tuple[str, int], node: Node[list[tuple[str, int, str]]]) -> l
                 return classify(data, node.right)
     return node.data
 
-def test(data: tuple[str, int], tree: Node[list[tuple[str, int, str]]]):
-    print('----------')
-    print('data =', data)
-    category = classify(data, tree)
-    print("category =", category)
+def test(data: tuple[str, int, str], tree: Node[list[tuple[str, int, str]]]):
+    category = classify((data[0], data[1]), tree)
     labels = list(map(lambda x:x[2], category))
-    print("labels= ", labels)
     probs = get_probs(labels)
-    print("probs= ", probs)
+    print(f" Actual: {data[2]}. Predicted: {probs}")
 
 def main():
     tree: Node[list[tuple[str, int, str]]] = build_tree(train_data)
-    test((train_data[0][0], train_data[0][1]), tree)
-    test((train_data[1][0], train_data[1][1]), tree)
-    test((train_data[2][0], train_data[2][1]), tree)
+    # Evaluate
+    testing_data: list[tuple[str, int, str]] = [
+        ('Green', 3, 'Apple'),
+        ('Yellow', 4, 'Apple'),
+        ('Red', 2, 'Grape'),
+        ('Red', 1, 'Grape'),
+        ('Yellow', 3, 'Lemon'),
+    ]
+    for data in testing_data:
+        test(data, tree)
 
 if __name__ == "__main__":
     main()
