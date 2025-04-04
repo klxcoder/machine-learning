@@ -125,10 +125,17 @@ def classify(data: tuple[str, int], node: Node[list[tuple[str, int, str]]]) -> l
                 return classify(data, node.right)
     return node.data
 
-def main():
-    tree = build_tree(train_data)
-    category = classify((train_data[0][0], train_data[0][1]), tree)
+def test(data: tuple[str, int], tree: Node[list[tuple[str, int, str]]]):
+    print('----------')
+    print('data = ', data)
+    category = classify(data, tree)
     print("category =", category)
+
+def main():
+    tree: Node[list[tuple[str, int, str]]] = build_tree(train_data)
+    test((train_data[0][0], train_data[0][1]), tree)
+    test((train_data[1][0], train_data[1][1]), tree)
+    test((train_data[2][0], train_data[2][1]), tree)
 
 if __name__ == "__main__":
     main()
