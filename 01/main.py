@@ -89,6 +89,10 @@ def main():
     best_gain, best_question = find_best_split(train_data)
     print(best_gain) # 0.37333333333333324
     print(best_question) # Is diameter >= 3?
+    if not best_question: return
+    left, right = get_left_right(train_data, best_question.fn)
+    print(left) # [('Green', 3, 'Apple'), ('Yellow', 3, 'Apple'), ('Yellow', 3, 'Lemon')]
+    print(right) # [('Red', 1, 'Grape'), ('Red', 1, 'Grape')]
 
 if __name__ == "__main__":
     main()
