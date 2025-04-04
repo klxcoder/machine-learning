@@ -136,9 +136,13 @@ def classify(data: tuple[str, int], node: Node[list[tuple[str, int, str]]]) -> l
 
 def test(data: tuple[str, int], tree: Node[list[tuple[str, int, str]]]):
     print('----------')
-    print('data = ', data)
+    print('data =', data)
     category = classify(data, tree)
     print("category =", category)
+    labels = list(map(lambda x:x[2], category))
+    print("labels= ", labels)
+    probs = get_probs(labels)
+    print("probs= ", probs)
 
 def main():
     tree: Node[list[tuple[str, int, str]]] = build_tree(train_data)
