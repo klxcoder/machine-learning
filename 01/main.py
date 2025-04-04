@@ -61,7 +61,7 @@ class SplitFn:
             return f"Is {header[self.col]} >= {self.val}?"
         return ""
 
-def find_best_split(train_data: list[tuple[str, int, str]]):
+def find_best_split_fn(train_data: list[tuple[str, int, str]]):
     gini_impurity = get_gini_impurity(get_labels(train_data))
 
     best_gain: float = 0  # keep track of the best information gain
@@ -88,9 +88,9 @@ train_data: list[tuple[str, int, str]] = [
 class Node[T]:
     def __init__(self, data: T):
         self.data: T = data
-    def setLeft(self, node: "Node[T]"):
+    def set_left(self, node: "Node[T]"):
         self.left = node
-    def setRight(self, node: "Node[T]"):
+    def set_right(self, node: "Node[T]"):
         self.right = node
     def __repr__(self):
         return f"Node: {self.data}"
@@ -98,16 +98,19 @@ class Node[T]:
 def build_tree(train_data: list[tuple[str, int, str]]) -> Node[list[tuple[str, int, str]]]:
     print('---------')
     print(train_data)
-    best_gain, best_question = find_best_split(train_data)
+    best_gain, best_split_fn = find_best_split_fn(train_data)
     print(best_gain)
-    print(best_question)
+    print(best_split_fn)
     node: Node[list[tuple[str, int, str]]] = Node(train_data)
-    if best_gain == 0 or not best_question:
+    if best_gain == 0 or not best_split_fn:
         return node
-    left, right = get_left_right(train_data, best_question.fn)
-    build_tree(left)
-    build_tree(right)
+    left, right = get_left_right(train_data, best_split_fn.fn)
+    node.set_left(build_tree(left))
+    node.set_right(build_tree(right))
     return node
+
+def classify(data: tuple[str, int], node: Node[list[tuple[str, int, str]]]):
+    pass
 
 def main():
     build_tree(train_data)
