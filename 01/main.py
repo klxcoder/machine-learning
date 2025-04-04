@@ -85,6 +85,25 @@ train_data: list[tuple[str, int, str]] = [
     ('Yellow', 3, 'Lemon'),
 ]
 
+class Node[T]:
+    def __init__(self, data: T):
+        self.data: T = data
+    def setLeft(self, node: "Node[T]"):
+        self.left = node
+    def setRight(self, node: "Node[T]"):
+        self.right = node
+    def __repr__(self):
+        return f"Node: {self.data}"
+
+def build_tree(train_data: list[tuple[str, int, str]]) -> Node[list[tuple[str, int, str]]]:
+    print('---------')
+    print(train_data)
+    best_gain, best_question = find_best_split(train_data)
+    print(best_gain)
+    print(best_question)
+    node: Node[list[tuple[str, int, str]]] = Node(train_data)
+    return node
+
 def main():
     best_gain, best_question = find_best_split(train_data)
     print(best_gain) # 0.37333333333333324
@@ -93,6 +112,7 @@ def main():
     left, right = get_left_right(train_data, best_question.fn)
     print(left) # [('Green', 3, 'Apple'), ('Yellow', 3, 'Apple'), ('Yellow', 3, 'Lemon')]
     print(right) # [('Red', 1, 'Grape'), ('Red', 1, 'Grape')]
+    build_tree(train_data)
 
 if __name__ == "__main__":
     main()
