@@ -88,7 +88,7 @@ train_data: list[tuple[str, int, str]] = [
 def main():
     best_gain, best_question = find_best_split(train_data)
     print(best_gain) # 0.37333333333333324
-    print(best_question) # col 1 >= 3
+    print(best_question) # Is diameter >= 3?
 
 if __name__ == "__main__":
     main()
