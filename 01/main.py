@@ -4,14 +4,23 @@ def get_labels(train_data: list[tuple[str, int, str]]):
     lables: list[str] = list(map(lambda x: x[2], train_data))
     return lables
 
-def get_gini_impurity(labels: list[str]) -> float:
+def get_probs(labels: list[str]) -> dict[str, float]:
     total: int = len(labels)
+
     counts = {}
     for label in labels:
         counts[label] = counts.get(label, 0) + 1
+
+    probs: dict[str, float] = {}
+    for label, count in counts.items():
+        probs[label] = count / total
+
+    return probs        
+
+def get_gini_impurity(labels: list[str]) -> float:
+    probs = get_probs(labels)
     impurity = 1.0
-    for count in counts.values():
-        prob = count / total
+    for _, prob in probs.items():
         impurity -= prob ** 2
     return impurity
 
