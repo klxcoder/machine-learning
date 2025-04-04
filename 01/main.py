@@ -73,6 +73,8 @@ def find_best_split_fn(train_data: list[tuple[str, int, str]]):
         for val in values:
             split_fn = SplitFn(col, val)
             gain: float = get_information_gain(train_data, split_fn.fn, gini_impurity)
+            if gain == 0:
+                continue
             if gain >= best_gain:
                 best_gain, best_split_fn = gain, split_fn
     return best_gain, best_split_fn
