@@ -93,7 +93,7 @@
     + L1 regularization: used for features selection (remove some features, do not add features)
     + PCA (dimensionality reduction): Creates new features that are combinations of the original ones
   - Math: What is standard deviations
-
+  - Why softmax use $e^x$? Why not use abs(x) or not use $x^2$?
 # Binary classification
   - Logistic regression
   - SVM
