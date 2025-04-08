@@ -97,6 +97,11 @@
   - Compare binary classification, multi-class classification, multi-label classification:
     + Which activation apply to the output layer? Sigmoid or softmax?
     + The number of neurons in the output layer? 1 for binary classification, n for others
+  - What does "adam" optimizer stands for? Each neuron have its own learning rate?
+  - Challanges that ReLU face?
+  - ReLU variants:
+    + LeakyReLU: Small slope for negative value
+    + Parametric ReLU (PReLU): slope can be trained
 # Binary classification
   - Logistic regression
   - SVM
