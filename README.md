@@ -94,6 +94,9 @@
     + PCA (dimensionality reduction): Creates new features that are combinations of the original ones
   - Math: What is standard deviations
   - Why softmax use $e^x$? Why not use abs(x) or not use $x^2$?
+  - Compare binary classification, multi-class classification, multi-label classification:
+    + Which activation apply to the output layer? Sigmoid or softmax?
+    + The number of neurons in the output layer? 1 for binary classification, n for others
 # Binary classification
   - Logistic regression
   - SVM
